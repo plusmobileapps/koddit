@@ -14,5 +14,7 @@
 .cxx
 .idea
 
+SharedCode/build
+
 *xcuserdata
 *xcworkspacedata
