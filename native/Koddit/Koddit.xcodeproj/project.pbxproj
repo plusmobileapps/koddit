@@ -15,6 +15,8 @@
 		427FC5EB247CDAB6006C59DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 427FC5E9247CDAB6006C59DC /* LaunchScreen.storyboard */; };
 		427FC5F6247CDAB6006C59DC /* KodditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427FC5F5247CDAB6006C59DC /* KodditTests.swift */; };
 		427FC601247CDAB6006C59DC /* KodditUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427FC600247CDAB6006C59DC /* KodditUITests.swift */; };
+		427FC615247CE9E9006C59DC /* SharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427FC60F247CDB90006C59DC /* SharedCode.framework */; };
+		427FC616247CE9E9006C59DC /* SharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 427FC60F247CDB90006C59DC /* SharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		427FC617247CE9E9006C59DC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				427FC616247CE9E9006C59DC /* SharedCode.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		427FC5DB247CDAB4006C59DC /* Koddit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Koddit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		427FC5DE247CDAB4006C59DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +65,7 @@
 		427FC5FC247CDAB6006C59DC /* KodditUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KodditUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		427FC600247CDAB6006C59DC /* KodditUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KodditUITests.swift; sourceTree = "<group>"; };
 		427FC602247CDAB6006C59DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		427FC60F247CDB90006C59DC /* SharedCode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SharedCode.framework; path = "../../SharedCode/build/xcode-frameworks/SharedCode.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				427FC615247CE9E9006C59DC /* SharedCode.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +101,7 @@
 				427FC5F4247CDAB6006C59DC /* KodditTests */,
 				427FC5FF247CDAB6006C59DC /* KodditUITests */,
 				427FC5DC247CDAB4006C59DC /* Products */,
+				427FC60E247CDB90006C59DC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,6 +147,14 @@
 			path = KodditUITests;
 			sourceTree = "<group>";
 		};
+		427FC60E247CDB90006C59DC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				427FC60F247CDB90006C59DC /* SharedCode.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +162,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 427FC605247CDAB6006C59DC /* Build configuration list for PBXNativeTarget "Koddit" */;
 			buildPhases = (
+				427FC613247CDD34006C59DC /* ShellScript */,
 				427FC5D7247CDAB4006C59DC /* Sources */,
 				427FC5D8247CDAB4006C59DC /* Frameworks */,
 				427FC5D9247CDAB4006C59DC /* Resources */,
+				427FC617247CE9E9006C59DC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -253,6 +282,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		427FC613247CDD34006C59DC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"$SRCROOT/../../SharedCode/build/xcode-frameworks\"\n./gradlew :SharedCode:packForXCode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		427FC5D7247CDAB4006C59DC /* Sources */ = {
@@ -435,6 +484,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../SharedCode/build/xcode-frameworks";
 				INFOPLIST_FILE = Koddit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -452,6 +502,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../SharedCode/build/xcode-frameworks";
 				INFOPLIST_FILE = Koddit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
