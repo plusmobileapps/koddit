@@ -13,10 +13,14 @@ class FeedRepository {
     private val job = Job()
     private val scope = CoroutineScope(job + ApplicationDispatcher)
 
-    fun getDankMemes() {
+    fun getDankMemes(onSuccess: (RedditFeedResponse) -> Unit, onError: (Any) -> Unit) {
         scope.launch {
-            val response = client.get<RedditFeedResponse>("https://www.reddit.com/r/dankmemes/.json")
-            print(response)
+            try {
+                val response = client.get<RedditFeedResponse>("https://www.reddit.com/r/dankmemes/.json")
+                onSuccess(response)
+            } catch (e: Exception) {
+                onError(e)
+            }
         }
     }
 

@@ -19,10 +19,18 @@ class ViewController: UIViewController {
         label.textAlignment = .center
         label.font = label.font.withSize(25)
         label.text = CommonKt.createApplicationScreenMessage()
-        FeedRepository().getDankMemes()
+        FeedRepository().getDankMemes(onSuccess: onDankMemesLoaded(response:), onError: onDankMemesError(error:))
         view.addSubview(label)
     }
 
+    func onDankMemesLoaded(response: RedditFeedResponse) {
+        print("on ios")
+        print(response)
+    }
+    
+    func onDankMemesError(error: Any) {
+        print(error)
+    }
 
 }
 
