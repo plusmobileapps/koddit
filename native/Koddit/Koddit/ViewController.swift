@@ -19,6 +19,7 @@ class ViewController: UIViewController {
         label.textAlignment = .center
         label.font = label.font.withSize(25)
         label.text = CommonKt.createApplicationScreenMessage()
+        FeedRepository().getDankMemes()
         view.addSubview(label)
     }
 

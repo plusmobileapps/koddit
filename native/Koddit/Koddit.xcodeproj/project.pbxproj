@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		422A128F247E1CC1005F656E /* SharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427FC60F247CDB90006C59DC /* SharedCode.framework */; };
+		422A1290247E1CC1005F656E /* SharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 427FC60F247CDB90006C59DC /* SharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		427FC5DF247CDAB4006C59DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427FC5DE247CDAB4006C59DC /* AppDelegate.swift */; };
 		427FC5E1247CDAB4006C59DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427FC5E0247CDAB4006C59DC /* SceneDelegate.swift */; };
 		427FC5E3247CDAB4006C59DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427FC5E2247CDAB4006C59DC /* ViewController.swift */; };
@@ -15,8 +17,6 @@
 		427FC5EB247CDAB6006C59DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 427FC5E9247CDAB6006C59DC /* LaunchScreen.storyboard */; };
 		427FC5F6247CDAB6006C59DC /* KodditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427FC5F5247CDAB6006C59DC /* KodditTests.swift */; };
 		427FC601247CDAB6006C59DC /* KodditUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427FC600247CDAB6006C59DC /* KodditUITests.swift */; };
-		427FC615247CE9E9006C59DC /* SharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427FC60F247CDB90006C59DC /* SharedCode.framework */; };
-		427FC616247CE9E9006C59DC /* SharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 427FC60F247CDB90006C59DC /* SharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,13 +37,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		427FC617247CE9E9006C59DC /* Embed Frameworks */ = {
+		422A1291247E1CC1005F656E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				427FC616247CE9E9006C59DC /* SharedCode.framework in Embed Frameworks */,
+				422A1290247E1CC1005F656E /* SharedCode.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				427FC615247CE9E9006C59DC /* SharedCode.framework in Frameworks */,
+				422A128F247E1CC1005F656E /* SharedCode.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,7 +166,7 @@
 				427FC5D7247CDAB4006C59DC /* Sources */,
 				427FC5D8247CDAB4006C59DC /* Frameworks */,
 				427FC5D9247CDAB4006C59DC /* Resources */,
-				427FC617247CE9E9006C59DC /* Embed Frameworks */,
+				422A1291247E1CC1005F656E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

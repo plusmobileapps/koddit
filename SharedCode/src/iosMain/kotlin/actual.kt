@@ -1,5 +1,5 @@
-package com.jetbrains.handson.mpp.mobile
-
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.ios.Ios
 import platform.UIKit.UIDevice
 
 actual fun platformName(): String {
@@ -7,3 +7,5 @@ actual fun platformName(): String {
             " " +
             UIDevice.currentDevice.systemVersion
 }
+
+actual val client: HttpClient = HttpClient(Ios)
