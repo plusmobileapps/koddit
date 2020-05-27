@@ -2,10 +2,12 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
 }
 
 val ktor_version = "1.3.2"
 val coroutines_version = "1.3.7"
+val serialization_version = "0.20.0"
 
 kotlin {
     //select iOS target platform depending on the Xcode environment variables
@@ -29,17 +31,25 @@ kotlin {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
         implementation("io.ktor:ktor-client-core:$ktor_version")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines_version")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization_version")
+        implementation("io.ktor:ktor-client-serialization:$ktor_version")
+
     }
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
         implementation("io.ktor:ktor-client-android:$ktor_version")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version")
+        implementation("io.ktor:ktor-client-serialization-jvm:$ktor_version")
     }
 
     sourceSets["iosMain"].dependencies {
         implementation("io.ktor:ktor-client-ios:$ktor_version")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines_version")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization_version")
+        implementation("io.ktor:ktor-client-serialization-native:$ktor_version")
+
     }
 }
 

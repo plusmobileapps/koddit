@@ -1,3 +1,4 @@
+import com.plusmobileapps.sharedclient.RedditFeedResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import kotlinx.coroutines.CoroutineScope
@@ -14,7 +15,7 @@ class FeedRepository {
 
     fun getDankMemes() {
         scope.launch {
-            val response = client.get<String>("https://www.reddit.com/r/dankmemes/.json")
+            val response = client.get<RedditFeedResponse>("https://www.reddit.com/r/dankmemes/.json")
             print(response)
         }
     }
