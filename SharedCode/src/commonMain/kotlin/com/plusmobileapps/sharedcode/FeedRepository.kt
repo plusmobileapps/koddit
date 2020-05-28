@@ -1,8 +1,8 @@
-import com.plusmobileapps.sharedclient.RedditFeedResponse
+package com.plusmobileapps.sharedcode
+
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 

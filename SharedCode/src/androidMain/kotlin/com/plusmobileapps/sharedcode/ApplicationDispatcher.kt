@@ -1,3 +1,5 @@
+package com.plusmobileapps.sharedcode
+
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 

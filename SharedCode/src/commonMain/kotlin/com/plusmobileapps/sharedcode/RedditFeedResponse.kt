@@ -1,4 +1,4 @@
-package com.plusmobileapps.sharedclient
+package com.plusmobileapps.sharedcode
 
 import kotlinx.serialization.Serializable
 

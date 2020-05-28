@@ -3,16 +3,28 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
+    id("com.android.library")
     id("com.squareup.sqldelight")
 }
+android {
+    compileSdkVersion(29)
+    buildToolsVersion("29.0.2")
 
-sqldelight {
-    database("MyDatabase") {
-        packageName = "com.plusmobileapps.db"
-        sourceFolders = listOf("db")
-        schemaOutputDirectory = file("build/dbs")
+    defaultConfig {
+        minSdkVersion(21)
+        targetSdkVersion(29)
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
-    linkSqlite = false
+
+//    buildTypes {
+//        getByName("release") {
+//            minifyEnabled(false)
+//        }
+//    }
 }
 
 val ktor_version = "1.3.2"
@@ -34,8 +46,9 @@ kotlin {
             }
         }
     }
-
-    jvm("android")
+    targets {
+        android()
+    }
 
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
@@ -95,3 +108,10 @@ val packForXcode by tasks.creating(Sync::class) {
 }
 
 tasks.getByName("build").dependsOn(packForXcode)
+
+sqldelight {
+    database("MyDatabase") {
+        packageName = "com.plusmobileapps.sharedcode.db"
+        sourceFolders = listOf("sqldelight")
+    }
+}
