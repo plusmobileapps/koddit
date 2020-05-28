@@ -3,6 +3,28 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
+    id("com.android.library")
+    id("com.squareup.sqldelight")
+}
+android {
+    compileSdkVersion(29)
+    buildToolsVersion("29.0.2")
+
+    defaultConfig {
+        minSdkVersion(21)
+        targetSdkVersion(29)
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
 }
 
 val ktor_version = "1.3.2"
@@ -24,8 +46,9 @@ kotlin {
             }
         }
     }
-
-    jvm("android")
+    targets {
+        android()
+    }
 
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
@@ -33,7 +56,7 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines_version")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization_version")
         implementation("io.ktor:ktor-client-serialization:$ktor_version")
-
+        implementation("com.squareup.sqldelight:runtime:1.3.0")
     }
 
     sourceSets["androidMain"].dependencies {
@@ -42,6 +65,7 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version")
         implementation("io.ktor:ktor-client-serialization-jvm:$ktor_version")
+        implementation("com.squareup.sqldelight:android-driver:1.3.0")
     }
 
     sourceSets["iosMain"].dependencies {
@@ -49,6 +73,7 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines_version")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization_version")
         implementation("io.ktor:ktor-client-serialization-native:$ktor_version")
+        implementation ("com.squareup.sqldelight:native-driver:1.3.0")
 
     }
 }
@@ -83,3 +108,10 @@ val packForXcode by tasks.creating(Sync::class) {
 }
 
 tasks.getByName("build").dependsOn(packForXcode)
+
+sqldelight {
+    database("MyDatabase") {
+        packageName = "com.plusmobileapps.sharedcode.db"
+        sourceFolders = listOf("sqldelight")
+    }
+}

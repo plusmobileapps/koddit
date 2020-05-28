@@ -1,3 +1,4 @@
+package com.plusmobileapps.sharedcode
 
 expect fun platformName(): String
 
