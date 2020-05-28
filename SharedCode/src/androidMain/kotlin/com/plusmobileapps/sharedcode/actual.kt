@@ -1,5 +1,7 @@
 package com.plusmobileapps.sharedcode
 
+import android.content.Context
+import com.plusmobileapps.sharedcode.db.MyDatabase
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -18,4 +20,9 @@ actual val client: HttpClient = HttpClient(Android) {
     }
 }
 
-//val androidDriver = AndroidSqliteDriver()
+lateinit var context: Context
+
+actual fun createDb(): MyDatabase {
+    val androidDriver = AndroidSqliteDriver(MyDatabase.Schema, context, "mydatabase.db")
+    return MyDatabase.invoke(androidDriver)
+}

@@ -1,5 +1,6 @@
 package com.plusmobileapps.sharedcode
 
+import com.plusmobileapps.sharedcode.db.MyDatabase
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.ios.Ios
@@ -20,4 +21,8 @@ actual val client: HttpClient = HttpClient(Ios) {
     }
 }
 
-//val foo = NativeSqliteDriver()
+actual fun createDb(): MyDatabase {
+    val nativeSqliteDriver = NativeSqliteDriver(MyDatabase.Schema, "mydatabase.db")
+    return MyDatabase.invoke(nativeSqliteDriver)
+}
+
