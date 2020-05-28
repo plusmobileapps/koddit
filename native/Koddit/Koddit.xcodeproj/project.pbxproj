@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42562A1624806E13001C2235 /* RedditPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42562A1524806E13001C2235 /* RedditPostTableViewCell.swift */; };
+		42562A1A248072BD001C2235 /* RedditFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42562A19248072BD001C2235 /* RedditFeedTableViewController.swift */; };
 		425BCBA924802D17004D0DAE /* SharedCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427FC60F247CDB90006C59DC /* SharedCode.framework */; };
 		425BCBAA24802D17004D0DAE /* SharedCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 427FC60F247CDB90006C59DC /* SharedCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		427FC5DF247CDAB4006C59DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427FC5DE247CDAB4006C59DC /* AppDelegate.swift */; };
@@ -51,6 +53,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		42562A1524806E13001C2235 /* RedditPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditPostTableViewCell.swift; sourceTree = "<group>"; };
+		42562A19248072BD001C2235 /* RedditFeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditFeedTableViewController.swift; sourceTree = "<group>"; };
 		427FC5DB247CDAB4006C59DC /* Koddit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Koddit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		427FC5DE247CDAB4006C59DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		427FC5E0247CDAB4006C59DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 				427FC5E7247CDAB6006C59DC /* Assets.xcassets */,
 				427FC5E9247CDAB6006C59DC /* LaunchScreen.storyboard */,
 				427FC5EC247CDAB6006C59DC /* Info.plist */,
+				42562A1524806E13001C2235 /* RedditPostTableViewCell.swift */,
+				42562A19248072BD001C2235 /* RedditFeedTableViewController.swift */,
 			);
 			path = Koddit;
 			sourceTree = "<group>";
@@ -309,7 +315,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				427FC5E3247CDAB4006C59DC /* ViewController.swift in Sources */,
+				42562A1624806E13001C2235 /* RedditPostTableViewCell.swift in Sources */,
 				427FC5DF247CDAB4006C59DC /* AppDelegate.swift in Sources */,
+				42562A1A248072BD001C2235 /* RedditFeedTableViewController.swift in Sources */,
 				427FC5E1247CDAB4006C59DC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
