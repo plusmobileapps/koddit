@@ -20,11 +20,11 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
-//    buildTypes {
-//        getByName("release") {
-//            minifyEnabled(false)
-//        }
-//    }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
 }
 
 val ktor_version = "1.3.2"
