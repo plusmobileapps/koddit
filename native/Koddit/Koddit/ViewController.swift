@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         view.addSubview(label)
     }
 
-    func onDankMemesLoaded(response: [Posts]) {
+    func onDankMemesLoaded(response: [Post]) {
         print("on ios")
         print(response)
     }

@@ -1,0 +1,28 @@
+import kotlinx.serialization.PrimitiveKind.INT;
+
+CREATE TABLE Post(
+id TEXT NOT NULL PRIMARY KEY,
+title TEXT NOT NULL,
+kind TEXT NOT NULL,
+subreddit TEXT NOT NULL,
+author_fullname TEXT NOT NULL,
+subreddit_name_prefixed TEXT NOT NULL,
+downs INTEGER as Int,
+ups INTEGER as Int,
+thumbnail TEXT NOT NULL,
+post_hint TEXT NOT NULL,
+url TEXT NOT NULL,
+num_comments INTEGER as Int,
+author TEXT NOT NULL,
+permalink TEXT NOT NULL,
+is_video INTEGER AS Boolean DEFAULT 0
+);
+
+insertItem:
+INSERT OR REPLACE INTO Post(id, title, kind, subreddit, author_fullname, subreddit_name_prefixed, downs, ups, thumbnail, post_hint, url, num_comments, author, permalink, is_video)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+
+selectAll:
+SELECT * FROM Post;
+
+deleteAll:
+DELETE FROM Post;
