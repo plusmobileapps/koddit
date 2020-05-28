@@ -3,6 +3,16 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
+    id("com.squareup.sqldelight")
+}
+
+sqldelight {
+    database("MyDatabase") {
+        packageName = "com.plusmobileapps.db"
+        sourceFolders = listOf("db")
+        schemaOutputDirectory = file("build/dbs")
+    }
+    linkSqlite = false
 }
 
 val ktor_version = "1.3.2"
@@ -33,7 +43,7 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines_version")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization_version")
         implementation("io.ktor:ktor-client-serialization:$ktor_version")
-
+        implementation("com.squareup.sqldelight:runtime:1.3.0")
     }
 
     sourceSets["androidMain"].dependencies {
@@ -42,6 +52,7 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version")
         implementation("io.ktor:ktor-client-serialization-jvm:$ktor_version")
+        implementation("com.squareup.sqldelight:android-driver:1.3.0")
     }
 
     sourceSets["iosMain"].dependencies {
@@ -49,6 +60,7 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines_version")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization_version")
         implementation("io.ktor:ktor-client-serialization-native:$ktor_version")
+        implementation ("com.squareup.sqldelight:native-driver:1.3.0")
 
     }
 }

@@ -3,6 +3,8 @@ import io.ktor.client.engine.android.Android
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import kotlinx.serialization.json.Json
+import com.squareup.sqldelight.android.AndroidSqliteDriver
+
 
 actual fun platformName(): String {
     return "Android"
@@ -13,3 +15,5 @@ actual val client: HttpClient = HttpClient(Android) {
         serializer = KotlinxSerializer(Json.nonstrict)
     }
 }
+
+val androidDriver = AndroidSqliteDriver()
