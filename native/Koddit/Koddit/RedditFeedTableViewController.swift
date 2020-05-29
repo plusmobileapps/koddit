@@ -49,6 +49,17 @@ class RedditFeedTableViewController: UITableViewController {
 
         let post = posts[indexPath.row]
         cell.postTitle.text = post.title
+        cell.postShareButton.addTapGestureRecognizer {
+            let string = "https://reddit.com" + post.permalink
+            let url = URL(string: string)!
+            let activityViewController =
+                UIActivityViewController(activityItems: [string, url],
+                                         applicationActivities: nil)
+
+            self.present(activityViewController, animated: true) {
+                print()
+            }
+        }
         let imageUrl = URL(string: post.url)!
         
         DispatchQueue.global(qos: .userInitiated).async {
@@ -59,7 +70,7 @@ class RedditFeedTableViewController: UITableViewController {
                     let image = UIImage(data: imageData)
                     cell.postImage.image = image
 //                    cell.postImage.sizeToFit()
-                    self.tableView.reloadData()
+//                    self.tableView.reloadData()
                 }
             }catch{
                 print("Unable to load data: \(error)")
