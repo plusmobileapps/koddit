@@ -11,7 +11,7 @@ import UIKit
 class RedditPostTableViewCell: UITableViewCell {
     
     @IBOutlet weak var postTitle: UILabel!
-    
+        
     @IBOutlet weak var postImage: UIImageView!
     
     override func awakeFromNib() {

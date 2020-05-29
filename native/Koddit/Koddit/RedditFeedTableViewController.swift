@@ -49,6 +49,22 @@ class RedditFeedTableViewController: UITableViewController {
 
         let post = posts[indexPath.row]
         cell.postTitle.text = post.title
+        let imageUrl = URL(string: post.url)!
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            do{
+                let imageData: Data = try Data(contentsOf: imageUrl)
+
+                DispatchQueue.main.async {
+                    let image = UIImage(data: imageData)
+                    cell.postImage.image = image
+//                    cell.postImage.sizeToFit()
+                    self.tableView.reloadData()
+                }
+            }catch{
+                print("Unable to load data: \(error)")
+            }
+        }
          //Configure the cell...
 
         return cell
