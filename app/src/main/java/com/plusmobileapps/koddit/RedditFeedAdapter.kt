@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
+import com.plusmobileapps.sharedcode.db.data.Post
+import com.plusmobileapps.sharedcode.formattedAuthor
+import com.plusmobileapps.sharedcode.formattedKarma
 
 data class RedditFeedItem(
     val id: String,
@@ -24,26 +27,27 @@ data class RedditFeedItem(
 )
 
 interface RedditFeedItemListener {
-    fun onMoreOptionsClicked(id: String)
-    fun onPostClicked(id: String, imageview: ImageView)
-    fun onUpVoteClicked(id: String)
-    fun onDownVoteClicked(id: String)
-    fun onCommentClicked(id: String)
-    fun onShareButtonClicked(id: String)
+    fun onMoreOptionsClicked(post: Post)
+    fun onPostClicked(post: Post, imageview: ImageView)
+    fun onUpVoteClicked(post: Post)
+    fun onDownVoteClicked(post: Post)
+    fun onCommentClicked(post: Post)
+    fun onShareButtonClicked(post: Post)
 }
 
-class RedditFeedItemDiffer : DiffUtil.ItemCallback<RedditFeedItem>() {
-    override fun areItemsTheSame(oldItem: RedditFeedItem, newItem: RedditFeedItem): Boolean {
+class RedditFeedItemDiffer : DiffUtil.ItemCallback<Post.Impl>() {
+
+    override fun areItemsTheSame(oldItem: Post.Impl, newItem: Post.Impl): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: RedditFeedItem, newItem: RedditFeedItem): Boolean {
+    override fun areContentsTheSame(oldItem: Post.Impl, newItem: Post.Impl): Boolean {
         return oldItem == newItem
     }
 }
 
 class RedditFeedAdapter(private val listener: RedditFeedItemListener) :
-    ListAdapter<RedditFeedItem, RedditFeedViewHolder>(RedditFeedItemDiffer()) {
+    ListAdapter<Post.Impl, RedditFeedViewHolder>(RedditFeedItemDiffer()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RedditFeedViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -73,22 +77,22 @@ class RedditFeedViewHolder(private val listener: RedditFeedItemListener, view: V
     private val commentButton: Button = itemView.findViewById(R.id.feed_item_comment_button)
     private val shareButton: ImageButton = itemView.findViewById(R.id.feed_item_share_button)
 
-    fun bind(data: RedditFeedItem) {
-        subredditImage.load(data.subredditImageUrl, imageLoader = imageLoader)
+    fun bind(data: Post) {
+//        subredditImage.load(data.subredditImageUrl, imageLoader = imageLoader) todo need to fetch subreddit image url
         subreddit.text = data.subreddit
-        username.text = data.username
+        username.text = data.formattedAuthor
         postTitle.text = data.title
-        description.load(data.description, imageLoader = imageLoader)
+        description.load(data.url, imageLoader = imageLoader)
         description.transitionName = "$adapterPosition-${data.id}"
-        karmaCount.text = data.karmaCount
-        moreOptions.setOnClickListener { listener.onMoreOptionsClicked(data.id) }
-        downVote.setOnClickListener { listener.onDownVoteClicked(data.id) }
-        upVote.setOnClickListener { listener.onUpVoteClicked(data.id) }
-        commentButton.setOnClickListener { listener.onCommentClicked(data.id) }
-        shareButton.setOnClickListener { listener.onShareButtonClicked(data.id) }
-        itemView.setOnClickListener { listener.onPostClicked(data.id, description) }
+        karmaCount.text = data.formattedKarma
+        moreOptions.setOnClickListener { listener.onMoreOptionsClicked(data) }
+        downVote.setOnClickListener { listener.onDownVoteClicked(data) }
+        upVote.setOnClickListener { listener.onUpVoteClicked(data) }
+        commentButton.setOnClickListener { listener.onCommentClicked(data) }
+        shareButton.setOnClickListener { listener.onShareButtonClicked(data) }
+        itemView.setOnClickListener { listener.onPostClicked(data, description) }
         moreOptions.setOnClickListener {
-            listener.onMoreOptionsClicked(data.id)
+            listener.onMoreOptionsClicked(data)
         }
     }
 

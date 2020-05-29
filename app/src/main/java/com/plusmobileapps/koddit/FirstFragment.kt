@@ -1,5 +1,6 @@
 package com.plusmobileapps.koddit
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.plusmobileapps.sharedcode.FeedRepository
 import com.plusmobileapps.sharedcode.createApplicationScreenMessage
 import com.plusmobileapps.sharedcode.db.data.Post
+import com.plusmobileapps.sharedcode.formattedAuthor
+import com.plusmobileapps.sharedcode.shareLink
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -40,7 +43,7 @@ class FirstFragment : Fragment(), RedditFeedItemListener {
         FeedRepository().getDankMemes(
             onSuccess = { posts ->
                 Log.d("FirstFragment", posts.toString())
-                adapter.submitList(posts.map(Post::toRedditFeedItem))
+                adapter.submitList(posts as List<Post.Impl>)
             },
             onError = {
                 Log.e("FirstFragment", it.toString())
@@ -48,35 +51,30 @@ class FirstFragment : Fragment(), RedditFeedItemListener {
         )
     }
 
-    override fun onMoreOptionsClicked(id: String) {
-
+    override fun onMoreOptionsClicked(post: Post) {
     }
 
-    override fun onPostClicked(id: String, imageview: ImageView) {
+    override fun onPostClicked(post: Post, imageview: ImageView) {
     }
 
-    override fun onUpVoteClicked(id: String) {
+    override fun onUpVoteClicked(post: Post) {
     }
 
-    override fun onDownVoteClicked(id: String) {
+    override fun onDownVoteClicked(post: Post) {
     }
 
-    override fun onCommentClicked(id: String) {
+    override fun onCommentClicked(post: Post) {
     }
 
-    override fun onShareButtonClicked(id: String) {
-    }
-}
+    override fun onShareButtonClicked(post: Post) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, post.shareLink)
+            type = "text/plain"
+        }
 
-private fun Post.toRedditFeedItem(): RedditFeedItem {
-    return RedditFeedItem(
-        id = id,
-        title = title,
-        subreddit = subreddit_name_prefixed,
-        username = author_fullname,
-        timePosted = "12:00", //todo
-        subredditImageUrl = "",
-        karmaCount = ups.toString(),
-        description = url
-    )
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        requireContext().startActivity(shareIntent)
+    }
+
 }
