@@ -9,6 +9,13 @@ object Versions {
 
 }
 
+object Android {
+    const val compileSdkVersion = 29
+    const val androidToolsVersion = "29.0.2"
+    const val minSdk = 21
+    const val targetSdk = 29
+}
+
 object Ktor {
     val core = "io.ktor:ktor-client-core:${Versions.ktor}"
     val serialization = "io.ktor:ktor-client-serialization:${Versions.ktor}"
