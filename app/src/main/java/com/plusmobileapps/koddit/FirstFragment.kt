@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,9 @@ import com.plusmobileapps.sharedcode.createApplicationScreenMessage
 import com.plusmobileapps.sharedcode.db.data.Post
 import com.plusmobileapps.sharedcode.formattedAuthor
 import com.plusmobileapps.sharedcode.shareLink
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.get
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -40,10 +44,12 @@ class FirstFragment : Fragment(), RedditFeedItemListener {
             layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
             this.adapter = adapter
         }
-        FeedRepository().getDankMemes(
+        get<FeedRepository>().getDankMemes(
             onSuccess = { posts ->
                 Log.d("FirstFragment", posts.toString())
-                adapter.submitList(posts as List<Post.Impl>)
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                    adapter.submitList(posts as List<Post.Impl>)
+                }
             },
             onError = {
                 Log.e("FirstFragment", it.toString())

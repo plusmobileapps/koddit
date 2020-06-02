@@ -4,19 +4,25 @@ import com.plusmobileapps.sharedcode.db.MyDatabase
 import com.plusmobileapps.sharedcode.db.data.Post
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 expect val client: HttpClient
 
 expect fun createDb(): MyDatabase
 
-class FeedRepository {
+class FeedRepository : KoinComponent {
+
+    private val db: MyDatabase by inject()
+    private val client: HttpClient by inject()
+    private val dispatcher: CoroutineDispatcher by inject()
 
     private val job = Job()
-    private val scope = CoroutineScope(job + ApplicationDispatcher)
-    private val db: MyDatabase = createDb()
+    private val scope = CoroutineScope(job + dispatcher)
 
     fun getDankMemes(onSuccess: (List<Post>) -> Unit, onError: (Any) -> Unit) {
         val cache = db.postQueries.selectAll().executeAsList()
