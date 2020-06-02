@@ -1,6 +1,7 @@
 import Versions.coroutines
-import Versions.ktor_version
+import Versions.ktor
 import Versions.serialization
+import Versions.sqlDelight
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -54,28 +55,28 @@ kotlin {
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
         implementation(Ktor.core)
+        implementation(Ktor.serialization)
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization")
-        implementation("io.ktor:ktor-client-serialization:$ktor_version")
-        implementation("com.squareup.sqldelight:runtime:1.3.0")
+        implementation("com.squareup.sqldelight:runtime:$sqlDelight")
         api(Koin.core)
     }
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
-        implementation("io.ktor:ktor-client-android:${ktor_version}")
+        implementation(Ktor.androidClient)
+        implementation(Ktor.androidSerialization)
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization")
-        implementation("io.ktor:ktor-client-serialization-jvm:$ktor_version")
-        implementation("com.squareup.sqldelight:android-driver:1.3.0")
+        implementation("com.squareup.sqldelight:android-driver:$sqlDelight")
     }
 
     sourceSets["iosMain"].dependencies {
-        implementation("io.ktor:ktor-client-ios:$ktor_version")
+        implementation("io.ktor:ktor-client-ios:$ktor")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization")
-        implementation("io.ktor:ktor-client-serialization-native:$ktor_version")
-        implementation ("com.squareup.sqldelight:native-driver:1.3.0")
+        implementation("io.ktor:ktor-client-serialization-native:$ktor")
+        implementation ("com.squareup.sqldelight:native-driver:$sqlDelight")
 
     }
 }
