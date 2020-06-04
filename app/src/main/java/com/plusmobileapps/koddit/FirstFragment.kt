@@ -3,25 +3,22 @@ package com.plusmobileapps.koddit
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.plusmobileapps.sharedcode.FeedRepository
-import com.plusmobileapps.sharedcode.createApplicationScreenMessage
 import com.plusmobileapps.sharedcode.db.data.Post
-import com.plusmobileapps.sharedcode.formattedAuthor
+import com.plusmobileapps.sharedcode.di.commonModule
 import com.plusmobileapps.sharedcode.shareLink
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.get
+import org.kodein.di.direct
+import org.kodein.di.instance
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -29,8 +26,8 @@ import org.koin.android.ext.android.get
 class FirstFragment : Fragment(), RedditFeedItemListener {
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_first, container, false)
@@ -44,7 +41,7 @@ class FirstFragment : Fragment(), RedditFeedItemListener {
             layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
             this.adapter = adapter
         }
-        get<FeedRepository>().getDankMemes(
+        commonModule.direct.instance<FeedRepository>().getDankMemes(
             onSuccess = { posts ->
                 Log.d("FirstFragment", posts.toString())
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {

@@ -28,7 +28,7 @@ class RedditFeedTableViewController: UITableViewController {
     }
     
     private func loadRedditPosts() {
-        FeedRepository().getDankMemes(onSuccess: onDankMemesLoaded(response:), onError: onDankMemesError(error:))
+        Di.init().getFeedRepository().getDankMemes(onSuccess: onDankMemesLoaded(response:), onError: onDankMemesError(error:))
     }
     
     func onDankMemesLoaded(response: [Post]) {

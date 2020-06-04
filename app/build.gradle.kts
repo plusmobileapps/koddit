@@ -66,11 +66,7 @@ dependencies {
     implementation("io.coil-kt:coil-gif:0.11.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha03")
 
-    implementation(Koin.core)
-    implementation(Koin.android)
-    implementation(Koin.androidViewModel)
-
-    testImplementation("junit:junit:4.12")
+    testImplementation("junit:junit:${Android.junitVersion}")
     androidTestImplementation("androidx.test.ext:junit:1.1.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
 }

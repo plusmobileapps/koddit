@@ -8,18 +8,16 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
 expect val client: HttpClient
 
 expect fun createDb(): MyDatabase
 
-class FeedRepository : KoinComponent {
-
-    private val db: MyDatabase by inject()
-    private val client: HttpClient by inject()
-    private val dispatcher: CoroutineDispatcher by inject()
+class FeedRepository(
+    private val db: MyDatabase,
+    private val client: HttpClient,
+    dispatcher: CoroutineDispatcher
+) {
 
     private val job = Job()
     private val scope = CoroutineScope(job + dispatcher)

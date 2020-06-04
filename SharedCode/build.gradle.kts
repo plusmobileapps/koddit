@@ -29,8 +29,19 @@ android {
             isMinifyEnabled = false
         }
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
 
 
 kotlin {
@@ -59,7 +70,7 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization")
         implementation("com.squareup.sqldelight:runtime:$sqlDelight")
-        api(Koin.core)
+        api("org.kodein.di:kodein-di:${Versions.kodein}")
     }
 
     sourceSets["androidMain"].dependencies {
