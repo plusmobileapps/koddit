@@ -36,7 +36,7 @@ data class RedditPostResponse(
     val ups: Int,
     val id: String,
     val thumbnail: String,
-    val post_hint: String,
+    val post_hint: String = "",
     val url: String,
     val num_comments: Int,
     val author: String,

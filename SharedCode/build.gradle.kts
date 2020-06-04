@@ -1,3 +1,7 @@
+import Versions.coroutines
+import Versions.ktor
+import Versions.serialization
+import Versions.sqlDelight
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -7,12 +11,12 @@ plugins {
     id("com.squareup.sqldelight")
 }
 android {
-    compileSdkVersion(29)
-    buildToolsVersion("29.0.2")
+    compileSdkVersion(Android.compileSdkVersion)
+    buildToolsVersion(Android.androidToolsVersion)
 
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(29)
+        minSdkVersion(Android.minSdk)
+        targetSdkVersion(Android.targetSdk)
         versionCode = 1
         versionName = "1.0"
 
@@ -25,11 +29,20 @@ android {
             isMinifyEnabled = false
         }
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
 }
 
-val ktor_version = "1.3.2"
-val coroutines_version = "1.3.7"
-val serialization_version = "0.20.0"
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
 
 kotlin {
     //select iOS target platform depending on the Xcode environment variables
@@ -52,28 +65,29 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-        implementation("io.ktor:ktor-client-core:$ktor_version")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines_version")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization_version")
-        implementation("io.ktor:ktor-client-serialization:$ktor_version")
-        implementation("com.squareup.sqldelight:runtime:1.3.0")
+        implementation(Ktor.core)
+        implementation(Ktor.serialization)
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization")
+        implementation("com.squareup.sqldelight:runtime:$sqlDelight")
+        api("org.kodein.di:kodein-di:${Versions.kodein}")
     }
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
-        implementation("io.ktor:ktor-client-android:$ktor_version")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version")
-        implementation("io.ktor:ktor-client-serialization-jvm:$ktor_version")
-        implementation("com.squareup.sqldelight:android-driver:1.3.0")
+        implementation(Ktor.androidClient)
+        implementation(Ktor.androidSerialization)
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization")
+        implementation("com.squareup.sqldelight:android-driver:$sqlDelight")
     }
 
     sourceSets["iosMain"].dependencies {
-        implementation("io.ktor:ktor-client-ios:$ktor_version")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines_version")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization_version")
-        implementation("io.ktor:ktor-client-serialization-native:$ktor_version")
-        implementation ("com.squareup.sqldelight:native-driver:1.3.0")
+        implementation("io.ktor:ktor-client-ios:$ktor")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization")
+        implementation("io.ktor:ktor-client-serialization-native:$ktor")
+        implementation ("com.squareup.sqldelight:native-driver:$sqlDelight")
 
     }
 }
