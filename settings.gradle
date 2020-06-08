@@ -1,5 +1,6 @@
 rootProject.name='Koddit'
 include ':app'
 include ':SharedCode'
+include ':desktop'
 enableFeaturePreview('GRADLE_METADATA')
 
