@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation(project(":SharedCode"))
     implementation("no.tornado:tornadofx:1.7.20")
     implementation(files("/usr/lib/jvm/openjfx/rt/lib/ext/jfxrt.jar"))
 

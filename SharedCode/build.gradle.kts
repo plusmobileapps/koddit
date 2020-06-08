@@ -63,15 +63,48 @@ kotlin {
         android()
     }
 
-    sourceSets["commonMain"].dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-        implementation(Ktor.core)
-        implementation(Ktor.serialization)
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization")
-        implementation("com.squareup.sqldelight:runtime:$sqlDelight")
-        api("org.kodein.di:kodein-di:${Versions.kodein}")
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(kotlin("stdlib-common"))
+                implementation(Ktor.core)
+                implementation(Ktor.serialization)
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization")
+                implementation("com.squareup.sqldelight:runtime:$sqlDelight")
+                api("org.kodein.di:kodein-di:${Versions.kodein}")
+            }
+        }
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+            }
+        }
+
+
+//        js().compilations["main"].defaultSourceSet  { /* ... */ }
+//        js().compilations["test"].defaultSourceSet { /* ... */ }
+
+        // Default source set for JVM-specific sources and dependencies:
+        jvm().compilations["main"].defaultSourceSet {
+            dependencies {
+                implementation(kotlin("stdlib-jdk8"))
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.serialization}")
+                implementation("io.ktor:ktor-client-apache:${Versions.ktor}")
+                implementation("io.ktor:ktor-client-serialization-jvm:${Versions.ktor}")
+                implementation("com.squareup.sqldelight:sqlite-driver:${Versions.sqlDelight}")
+            }
+        }
+        // JVM-specific tests and their dependencies:
+        jvm().compilations["test"].defaultSourceSet {
+            dependencies {
+                implementation(kotlin("test-junit"))
+            }
+        }
     }
+
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
