@@ -36,14 +36,14 @@ class DbHelper(filePath: String) {
             version = 1
             print("init: created tables, setVersion to 1")
         } else {
-//            val schemaVer: Int = MyDatabase.Companion.Schema.getVersion()
-//            if (schemaVer > currentVer) {
-//                Database.Companion.getSchema().migrate(driver, currentVer, schemaVer)
-//                version = schemaVer
-//                Timber.d("init: migrated from %d to %d", currentVer, schemaVer)
-//            } else {
-//                Timber.d("init")
-//            }
+            val schemaVer: Int = MyDatabase.Schema.version
+            if (schemaVer > currentVer) {
+                MyDatabase.Schema.migrate(driver, currentVer, schemaVer)
+                version = schemaVer
+                print("init: migrated from $currentVer to $schemaVer")
+            } else {
+                print("init")
+            }
         }
         database = MyDatabase.invoke(driver)
     }
