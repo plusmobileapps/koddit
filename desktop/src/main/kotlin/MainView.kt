@@ -1,4 +1,4 @@
-//import com.plusmobileapps.sharedcode.FeedRepository
+import com.jfoenix.controls.JFXButton
 import com.plusmobileapps.sharedcode.di.Di
 import tornadofx.*
 
@@ -18,6 +18,7 @@ class MainView : View("Hello from koddit!") {
         label(title) {
             addClass(Styles.heading)
         }
+        add(JFXButton("Hello"))
 
         button("login") {
 

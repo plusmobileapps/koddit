@@ -13,6 +13,7 @@ dependencies {
     implementation(project(":SharedCode"))
     implementation("no.tornado:tornadofx:1.7.20")
     implementation(files("/usr/lib/jvm/openjfx/rt/lib/ext/jfxrt.jar"))
+    implementation("com.jfoenix:jfoenix:9.0.8")
 
     testCompile("junit", "junit", "4.12")
 }
