@@ -1,5 +1,3 @@
-import Versions.sqlDelight
-
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
@@ -9,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.0.0")
+        classpath("com.android.tools.build:gradle:3.0.0")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
         classpath("com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}")
@@ -24,9 +22,6 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
+        maven("https://kotlin.bintray.com/kotlin-js-wrappers/")
     }
-}
-
-task("clean") {
-    delete(rootProject.buildDir)
 }
