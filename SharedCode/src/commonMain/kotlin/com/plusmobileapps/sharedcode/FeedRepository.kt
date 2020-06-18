@@ -15,7 +15,7 @@ expect fun createDb(): MyDatabase
 
 class FeedRepository(
     private val db: MyDatabase,
-    private val client: HttpClient,
+    private val api: RedditFeedApi,
     dispatcher: CoroutineDispatcher
 ) {
 
@@ -30,8 +30,7 @@ class FeedRepository(
         }
         scope.launch {
             try {
-                val response =
-                    client.get<RedditFeedResponse>("https://www.reddit.com/r/dankmemes/.json")
+                val response = api.getDankMemes()
                 val posts = response.data.children.map { redditPost ->
                     val post = redditPost.toPost()
                     db.postQueries.insertItem(

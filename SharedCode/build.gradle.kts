@@ -62,6 +62,13 @@ kotlin {
     targets {
         android()
     }
+    js {
+        browser{
+            dceTask {
+                keep("ktor-ktor-io.\$\$importsForInline\$\$.ktor-ktor-io.io.ktor.utils.io")
+            }
+        }
+    }
 
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
@@ -89,6 +96,26 @@ kotlin {
         implementation("io.ktor:ktor-client-serialization-native:$ktor")
         implementation ("com.squareup.sqldelight:native-driver:$sqlDelight")
 
+    }
+
+    sourceSets["jsMain"].dependencies {
+        implementation(kotlin("stdlib-js"))
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:${Versions.coroutines}")
+        implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.7.1")
+        implementation(npm("text-encoding"))
+        implementation(npm("abort-controller"))
+        implementation(npm("bufferutil"))
+        implementation(npm("utf-8-validate"))
+        implementation(npm("fs"))
+
+        // ktor
+        implementation("io.ktor:ktor-client-js:${Versions.ktor}") //include http&websockets
+        implementation("io.ktor:ktor-client-json-js:${Versions.ktor}")
+        implementation("io.ktor:ktor-client-logging-js:${Versions.ktor}")
+        implementation("io.ktor:ktor-client-serialization-js:${Versions.ktor}")
+
+        // Serialize
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.serialization}")
     }
 }
 

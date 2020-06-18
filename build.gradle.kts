@@ -22,5 +22,6 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
+        maven("https://kotlin.bintray.com/kotlin-js-wrappers/")
     }
 }
