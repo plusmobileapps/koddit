@@ -28,11 +28,10 @@ dependencies {
     implementation("io.ktor:ktor-client-logging-js:${Versions.ktor}")
     implementation("io.ktor:ktor-client-serialization-js:${Versions.ktor}")
 
-//     Serialize
+    // Serialize
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.serialization}")
 
     // SQL Delight
-    //implementation("com.squareup.sqldelight:sqljs-driver:${Versions.sqlDelight}")
     implementation("com.squareup.sqldelight:runtime-js:${Versions.sqlDelight}")
 
     implementation(project(":SharedCode"))
