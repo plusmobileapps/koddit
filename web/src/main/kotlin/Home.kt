@@ -15,19 +15,20 @@ fun main() {
             h1 {
                 +"Koddit"
             }
-
-            div {
-                memes.data.children.forEach { meme ->
-                    p {
-                        +meme.data.title
-                    }
-                    img {
-                        attrs {
-                            src = meme.data.url
-                        }
-                    }
-                }
-            }
+            testCards(memes.data.children)
+//            div {
+//                memes.data.children.forEach { meme ->
+//
+//                    p {
+//                        +meme.data.title
+//                    }
+//                    img {
+//                        attrs {
+//                            src = meme.data.url
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 

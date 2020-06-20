@@ -3,11 +3,18 @@ plugins {
     kotlin("plugin.serialization")
 }
 
+repositories {
+    maven("https://dl.bintray.com/cfraser/muirwik")
+}
+
 dependencies {
     implementation(kotlin("stdlib-js"))
+    implementation("org.jetbrains:kotlin-styled:1.0.0-pre.104-kotlin-1.3.72")
+    implementation("org.jetbrains:kotlin-css-js:1.0.0-pre.104-kotlin-1.3.72")
+
     //React, React DOM + Wrappers (chapter 3)
-    implementation("org.jetbrains:kotlin-react:16.13.1-pre.105-kotlin-1.3.72")
-    implementation("org.jetbrains:kotlin-react-dom:16.13.1-pre.105-kotlin-1.3.72")
+    implementation("org.jetbrains:kotlin-react:16.13.1-pre.104-kotlin-1.3.72")
+    implementation("org.jetbrains:kotlin-react-dom:16.13.1-pre.104-kotlin-1.3.72")
     implementation(npm("react", "16.13.1"))
     implementation(npm("react-dom", "16.13.1"))
 
@@ -35,6 +42,10 @@ dependencies {
     implementation("com.squareup.sqldelight:runtime-js:${Versions.sqlDelight}")
 
     implementation(project(":SharedCode"))
+
+    implementation(npm("@material-ui/core", "^4.9.14"))
+    implementation("com.ccfraser.muirwik:muirwik-components:0.5.1")
+
 }
 
 kotlin {
