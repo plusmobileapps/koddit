@@ -78,6 +78,9 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization")
         implementation("com.squareup.sqldelight:runtime:$sqlDelight")
         api("org.kodein.di:kodein-di:${Versions.kodein}")
+        api("org.reduxkotlin:redux-kotlin-threadsafe:0.5.1")
+        api("org.reduxkotlin:redux-kotlin-thunk:0.4.0")
+//        api("org.reduxkotlin:presenter-middleware:0.2.10")
     }
 
     sourceSets["androidMain"].dependencies {
@@ -87,10 +90,11 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization")
         implementation("com.squareup.sqldelight:android-driver:$sqlDelight")
+        implementation("org.reduxkotlin:redux-kotlin-threadsafe-jvm:0.5.1")
     }
 
     sourceSets["iosMain"].dependencies {
-        implementation("io.ktor:ktor-client-ios:$ktor")
+        implementation(     "io.ktor:ktor-client-ios:$ktor")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization")
         implementation("io.ktor:ktor-client-serialization-native:$ktor")

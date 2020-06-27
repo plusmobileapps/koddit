@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
-import com.plusmobileapps.sharedcode.db.data.Post
+import com.plusmobileapps.sharedcode.RedditPostResponse
 import com.plusmobileapps.sharedcode.formattedAuthor
 import com.plusmobileapps.sharedcode.formattedKarma
 
@@ -27,27 +27,27 @@ data class RedditFeedItem(
 )
 
 interface RedditFeedItemListener {
-    fun onMoreOptionsClicked(post: Post)
-    fun onPostClicked(post: Post, imageview: ImageView)
-    fun onUpVoteClicked(post: Post)
-    fun onDownVoteClicked(post: Post)
-    fun onCommentClicked(post: Post)
-    fun onShareButtonClicked(post: Post)
+    fun onMoreOptionsClicked(post: RedditPostResponse)
+    fun onPostClicked(post: RedditPostResponse, imageview: ImageView)
+    fun onUpVoteClicked(post: RedditPostResponse)
+    fun onDownVoteClicked(post: RedditPostResponse)
+    fun onCommentClicked(post: RedditPostResponse)
+    fun onShareButtonClicked(post: RedditPostResponse)
 }
 
-class RedditFeedItemDiffer : DiffUtil.ItemCallback<Post.Impl>() {
+class RedditFeedItemDiffer : DiffUtil.ItemCallback<RedditPostResponse>() {
 
-    override fun areItemsTheSame(oldItem: Post.Impl, newItem: Post.Impl): Boolean {
+    override fun areItemsTheSame(oldItem: RedditPostResponse, newItem: RedditPostResponse): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Post.Impl, newItem: Post.Impl): Boolean {
+    override fun areContentsTheSame(oldItem: RedditPostResponse, newItem: RedditPostResponse): Boolean {
         return oldItem == newItem
     }
 }
 
 class RedditFeedAdapter(private val listener: RedditFeedItemListener) :
-    ListAdapter<Post.Impl, RedditFeedViewHolder>(RedditFeedItemDiffer()) {
+    ListAdapter<RedditPostResponse, RedditFeedViewHolder>(RedditFeedItemDiffer()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RedditFeedViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -77,7 +77,7 @@ class RedditFeedViewHolder(private val listener: RedditFeedItemListener, view: V
     private val commentButton: Button = itemView.findViewById(R.id.feed_item_comment_button)
     private val shareButton: ImageButton = itemView.findViewById(R.id.feed_item_share_button)
 
-    fun bind(data: Post) {
+    fun bind(data: RedditPostResponse) {
 //        subredditImage.load(data.subredditImageUrl, imageLoader = imageLoader) todo need to fetch subreddit image url
         subreddit.text = data.subreddit
         username.text = data.formattedAuthor

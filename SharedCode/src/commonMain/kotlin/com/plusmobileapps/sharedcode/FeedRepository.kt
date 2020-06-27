@@ -2,12 +2,17 @@ package com.plusmobileapps.sharedcode
 
 import com.plusmobileapps.sharedcode.db.MyDatabase
 import com.plusmobileapps.sharedcode.db.data.Post
+import com.plusmobileapps.sharedcode.redux.Actions
+import com.plusmobileapps.sharedcode.redux.AppState
+import com.plusmobileapps.sharedcode.redux.store
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.reduxkotlin.Thunk
+import org.reduxkotlin.createThunkMiddleware
 
 expect val client: HttpClient
 
@@ -22,16 +27,19 @@ class FeedRepository(
     private val job = Job()
     private val scope = CoroutineScope(job + dispatcher)
 
-    fun getDankMemes(onSuccess: (List<Post>) -> Unit, onError: (Any) -> Unit) {
-        val cache = db.postQueries.selectAll().executeAsList()
-        if (cache.isNotEmpty()) {
-            onSuccess(cache)
-            return
-        }
+
+    fun getDankMemes(): Thunk<AppState> = { dispatch, getState, extraArg ->
+        dispatch(Actions.LoadingFeed)
+
         scope.launch {
+            val cache = db.postQueries.selectAll().executeAsList()
+            if (cache.isNotEmpty()) {
+                dispatch(Actions.FeedLoaded(cache.map { it.toRedditPost() }))
+                return@launch
+            }
             try {
                 val response = api.getDankMemes()
-                val posts = response.data.children.map { redditPost ->
+                response.data.children.forEach { redditPost ->
                     val post = redditPost.toPost()
                     db.postQueries.insertItem(
                         id = post.id,
@@ -50,11 +58,10 @@ class FeedRepository(
                         subreddit = post.subreddit,
                         title = post.title
                     )
-                    post
                 }
-                onSuccess(posts)
+                dispatch(Actions.FeedLoaded(posts = response.data.children.map { it.data }))
             } catch (e: Exception) {
-                onError(e)
+                dispatch(Actions.FeedError(e.toString()))
             }
         }
     }
@@ -76,6 +83,25 @@ class FeedRepository(
             subreddit_name_prefixed = data.subreddit_name_prefixed,
             thumbnail = data.thumbnail,
             url = data.url
+        )
+    }
+
+    private fun Post.toRedditPost(): RedditPostResponse {
+        return RedditPostResponse(
+            id = id,
+            ups = ups ?: 0,
+            downs = downs ?: 0,
+            title = title,
+            author = author,
+            author_fullname = author_fullname,
+            is_video = is_video ?: false,
+            num_comments = num_comments ?: 0,
+            permalink = permalink,
+            post_hint = post_hint,
+            subreddit = subreddit,
+            subreddit_name_prefixed = subreddit_name_prefixed,
+            thumbnail = thumbnail,
+            url = url
         )
     }
 
