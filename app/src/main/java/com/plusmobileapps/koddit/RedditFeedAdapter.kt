@@ -14,6 +14,7 @@ import coil.api.load
 import com.plusmobileapps.sharedcode.RedditPostResponse
 import com.plusmobileapps.sharedcode.formattedAuthor
 import com.plusmobileapps.sharedcode.formattedKarma
+import com.plusmobileapps.sharedcode.redux.*
 
 data class RedditFeedItem(
     val id: String,
@@ -26,15 +27,6 @@ data class RedditFeedItem(
     val karmaCount: String
 )
 
-interface RedditFeedItemListener {
-    fun onMoreOptionsClicked(post: RedditPostResponse)
-    fun onPostClicked(post: RedditPostResponse, imageview: ImageView)
-    fun onUpVoteClicked(post: RedditPostResponse)
-    fun onDownVoteClicked(post: RedditPostResponse)
-    fun onCommentClicked(post: RedditPostResponse)
-    fun onShareButtonClicked(post: RedditPostResponse)
-}
-
 class RedditFeedItemDiffer : DiffUtil.ItemCallback<RedditPostResponse>() {
 
     override fun areItemsTheSame(oldItem: RedditPostResponse, newItem: RedditPostResponse): Boolean {
@@ -46,13 +38,12 @@ class RedditFeedItemDiffer : DiffUtil.ItemCallback<RedditPostResponse>() {
     }
 }
 
-class RedditFeedAdapter(private val listener: RedditFeedItemListener) :
-    ListAdapter<RedditPostResponse, RedditFeedViewHolder>(RedditFeedItemDiffer()) {
+class RedditFeedAdapter : ListAdapter<RedditPostResponse, RedditFeedViewHolder>(RedditFeedItemDiffer()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RedditFeedViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.reddit_feed_list_item, parent, false)
-        return RedditFeedViewHolder(listener, view)
+        return RedditFeedViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RedditFeedViewHolder, position: Int) {
@@ -60,7 +51,7 @@ class RedditFeedAdapter(private val listener: RedditFeedItemListener) :
     }
 }
 
-class RedditFeedViewHolder(private val listener: RedditFeedItemListener, view: View) :
+class RedditFeedViewHolder(view: View) :
     RecyclerView.ViewHolder(view) {
 
     val imageLoader = itemView.context.gifImageLoader
@@ -85,15 +76,25 @@ class RedditFeedViewHolder(private val listener: RedditFeedItemListener, view: V
         description.load(data.url, imageLoader = imageLoader)
         description.transitionName = "$adapterPosition-${data.id}"
         karmaCount.text = data.formattedKarma
-        moreOptions.setOnClickListener { listener.onMoreOptionsClicked(data) }
-        downVote.setOnClickListener { listener.onDownVoteClicked(data) }
-        upVote.setOnClickListener { listener.onUpVoteClicked(data) }
-        commentButton.setOnClickListener { listener.onCommentClicked(data) }
-        shareButton.setOnClickListener { listener.onShareButtonClicked(data) }
-        itemView.setOnClickListener { listener.onPostClicked(data, description) }
         moreOptions.setOnClickListener {
-            listener.onMoreOptionsClicked(data)
+            store.dispatch(MoreOptionsAction(data.id))
         }
+        downVote.setOnClickListener { store.dispatch(DownVoteAction(data.id)) }
+        upVote.setOnClickListener { store.dispatch(UpVoteAction(data.id)) }
+        commentButton.setOnClickListener { store.dispatch(OpenCommentAction(data.id)) }
+        shareButton.setOnClickListener {
+            store.dispatch(SharePostAction(data.id))
+            //TODO
+            //        val sendIntent: Intent = Intent().apply {
+//            action = Intent.ACTION_SEND
+//            putExtra(Intent.EXTRA_TEXT, post.shareLink)
+//            type = "text/plain"
+//        }
+//
+//        val shareIntent = Intent.createChooser(sendIntent, null)
+//        requireContext().startActivity(shareIntent)
+        }
+        itemView.setOnClickListener { store.dispatch(PostDetailAction(data.id)) }
     }
 
 }

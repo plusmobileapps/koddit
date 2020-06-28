@@ -7,10 +7,7 @@ import com.plusmobileapps.sharedcode.redux.AppState
 import com.plusmobileapps.sharedcode.redux.store
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.reduxkotlin.Thunk
 import org.reduxkotlin.createThunkMiddleware
 

@@ -9,16 +9,16 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.plusmobileapps.sharedcode.FeedRepository
 import com.plusmobileapps.sharedcode.RedditPostResponse
 import com.plusmobileapps.sharedcode.di.commonModule
-import com.plusmobileapps.sharedcode.redux.AppState
-import com.plusmobileapps.sharedcode.redux.FeedStarted
-import com.plusmobileapps.sharedcode.redux.UpVoteAction
-import com.plusmobileapps.sharedcode.redux.store
+import com.plusmobileapps.sharedcode.redux.*
 import com.plusmobileapps.sharedcode.shareLink
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.kodein.di.direct
 import org.kodein.di.instance
 import org.reduxkotlin.StoreSubscription
@@ -26,10 +26,10 @@ import org.reduxkotlin.StoreSubscription
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment(), RedditFeedItemListener {
+class FirstFragment : Fragment() {
 
     private lateinit var storeSubscription: StoreSubscription
-    val adapter = RedditFeedAdapter(this)
+    val adapter = RedditFeedAdapter()
     private lateinit var progressBar: ProgressBar
     private lateinit var errorMessage: TextView
 
@@ -53,7 +53,11 @@ class FirstFragment : Fragment(), RedditFeedItemListener {
         }
         // Inflate the layout for this fragment
         storeSubscription = store.subscribe {
-            render(store.state)
+            lifecycleScope.launchWhenStarted {
+                withContext(Dispatchers.Main) {
+                    render(store.state)
+                }
+            }
         }
         store.dispatch(FeedStarted)
         return view
@@ -65,50 +69,10 @@ class FirstFragment : Fragment(), RedditFeedItemListener {
     }
 
     private fun render(appState: AppState) {
-        when {
-            appState.isLoading -> {
-                progressBar.visibility = View.VISIBLE
-                errorMessage.visibility = View.GONE
-            }
-            appState.error != null -> {
-                errorMessage.visibility = View.VISIBLE
-                errorMessage.text = appState.error
-                progressBar.visibility = View.GONE
-            }
-            appState.posts.isNotEmpty() -> {
-                errorMessage.visibility = View.GONE
-                progressBar.visibility = View.GONE
-                adapter.submitList(appState.posts)
-            }
-
-        }
-    }
-
-    override fun onMoreOptionsClicked(post: RedditPostResponse) {
-    }
-
-    override fun onPostClicked(post: RedditPostResponse, imageview: ImageView) {
-    }
-
-    override fun onUpVoteClicked(post: RedditPostResponse) {
-        store.dispatch(UpVoteAction(post.id))
-    }
-
-    override fun onDownVoteClicked(post: RedditPostResponse) {
-    }
-
-    override fun onCommentClicked(post: RedditPostResponse) {
-    }
-
-    override fun onShareButtonClicked(post: RedditPostResponse) {
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, post.shareLink)
-            type = "text/plain"
-        }
-
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        requireContext().startActivity(shareIntent)
+        progressBar.showOrGone(appState.isLoading)
+        adapter.submitList(appState.posts)
+        errorMessage.showOrGone(appState.error != null)
+        errorMessage.text = appState.error
     }
 
 }

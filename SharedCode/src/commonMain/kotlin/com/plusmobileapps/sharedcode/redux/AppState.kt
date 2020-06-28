@@ -26,7 +26,11 @@ class Actions {
 object ApplicationStarted
 object FeedStarted
 data class UpVoteAction(val postId: String)
+data class PostDetailAction(val postId: String)
 data class DownVoteAction(val postId: String)
+data class MoreOptionsAction(val postId: String)
+data class OpenCommentAction(val postId: String)
+data class SharePostAction(val postId: String)
 
 fun rootReducer(state: AppState, action: Any): AppState {
     return when (action) {
