@@ -77,13 +77,13 @@ class RedditFeedViewHolder(view: View) :
         description.transitionName = "$adapterPosition-${data.id}"
         karmaCount.text = data.formattedKarma
         moreOptions.setOnClickListener {
-            store.dispatch(MoreOptionsAction(data.id))
+            dispatch(MoreOptionsAction(data.id))
         }
-        downVote.setOnClickListener { store.dispatch(DownVoteAction(data.id)) }
-        upVote.setOnClickListener { store.dispatch(UpVoteAction(data.id)) }
-        commentButton.setOnClickListener { store.dispatch(OpenCommentAction(data.id)) }
+        downVote.setOnClickListener { dispatch(DownVoteAction(data.id)) }
+        upVote.setOnClickListener { dispatch(UpVoteAction(data.id)) }
+        commentButton.setOnClickListener { dispatch(OpenCommentAction(data.id)) }
         shareButton.setOnClickListener {
-            store.dispatch(SharePostAction(data.id))
+            dispatch(SharePostAction(data.id))
             //TODO
             //        val sendIntent: Intent = Intent().apply {
 //            action = Intent.ACTION_SEND
@@ -94,7 +94,7 @@ class RedditFeedViewHolder(view: View) :
 //        val shareIntent = Intent.createChooser(sendIntent, null)
 //        requireContext().startActivity(shareIntent)
         }
-        itemView.setOnClickListener { store.dispatch(PostDetailAction(data.id)) }
+        itemView.setOnClickListener { dispatch(PostDetailAction(data.id)) }
     }
 
 }

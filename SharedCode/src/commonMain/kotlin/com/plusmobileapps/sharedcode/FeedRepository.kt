@@ -4,7 +4,6 @@ import com.plusmobileapps.sharedcode.db.MyDatabase
 import com.plusmobileapps.sharedcode.db.data.Post
 import com.plusmobileapps.sharedcode.redux.Actions
 import com.plusmobileapps.sharedcode.redux.AppState
-import com.plusmobileapps.sharedcode.redux.store
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import kotlinx.coroutines.*

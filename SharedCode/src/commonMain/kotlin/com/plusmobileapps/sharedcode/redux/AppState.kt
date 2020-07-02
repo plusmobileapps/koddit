@@ -10,7 +10,7 @@ import org.reduxkotlin.*
 data class AppState(
     val isLoading: Boolean = false,
     val posts: List<RedditPostResponse> = listOf(),
-    val error: String? = null
+    val error: String = ""
 ) {
     companion object {
         val initialState = AppState(isLoading = true)
@@ -55,4 +55,4 @@ fun rootReducer(state: AppState, action: Any): AppState {
     }
 }
 
-val store = createThreadSafeStore(::rootReducer, AppState.initialState, applyMiddleware(createThunkMiddleware()))
+//TODO apply middle ware for presenter

@@ -1,42 +1,35 @@
 package com.plusmobileapps.koddit
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.plusmobileapps.sharedcode.FeedRepository
 import com.plusmobileapps.sharedcode.RedditPostResponse
 import com.plusmobileapps.sharedcode.di.commonModule
-import com.plusmobileapps.sharedcode.redux.*
-import com.plusmobileapps.sharedcode.shareLink
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.plusmobileapps.sharedcode.redux.FeedStarted
+import com.plusmobileapps.sharedcode.redux.HomeFeedView
 import org.kodein.di.direct
 import org.kodein.di.instance
-import org.reduxkotlin.StoreSubscription
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment() {
+class HomeFeedFragment : BaseFragment<HomeFeedView>(), HomeFeedView {
 
-    private lateinit var storeSubscription: StoreSubscription
-    val adapter = RedditFeedAdapter()
+    private val adapter = RedditFeedAdapter()
     private lateinit var progressBar: ProgressBar
     private lateinit var errorMessage: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val foo = commonModule.direct.instance<FeedRepository>().getDankMemes()
-        foo(store.dispatch, store.getState, null)
+        foo(dispatch, KodditApplication.reduxEngine.store.getState, null)
     }
 
     override fun onCreateView(
@@ -49,30 +42,25 @@ class FirstFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.reddit_home_feed)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
-            this.adapter = this@FirstFragment.adapter
+            this.adapter = this@HomeFeedFragment.adapter
         }
-        // Inflate the layout for this fragment
-        storeSubscription = store.subscribe {
-            lifecycleScope.launchWhenStarted {
-                withContext(Dispatchers.Main) {
-                    render(store.state)
-                }
-            }
-        }
-        store.dispatch(FeedStarted)
+        dispatch(FeedStarted)
         return view
     }
 
-    override fun onDestroy() {
-        storeSubscription()
-        super.onDestroy()
+    override fun showLoading(show: Boolean) = progressBar.showOrGone(show)
+
+    override fun showError(error: String) {
+        errorMessage.visibility = View.VISIBLE
+        errorMessage.text = error
     }
 
-    private fun render(appState: AppState) {
-        progressBar.showOrGone(appState.isLoading)
-        adapter.submitList(appState.posts)
-        errorMessage.showOrGone(appState.error != null)
-        errorMessage.text = appState.error
+    override fun hideError() {
+        errorMessage.visibility = View.GONE
+    }
+
+    override fun showPosts(posts: List<RedditPostResponse>) {
+        adapter.submitList(posts)
     }
 
 }

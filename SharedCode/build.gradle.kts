@@ -9,7 +9,12 @@ plugins {
     kotlin("plugin.serialization")
     id("com.android.library")
     id("com.squareup.sqldelight")
+    id("maven-publish")
 }
+
+group = "com.plusmobileapps.redditclient"
+version = "0.0.1"
+
 android {
     compileSdkVersion(Android.compileSdkVersion)
     buildToolsVersion(Android.androidToolsVersion)
@@ -18,7 +23,7 @@ android {
         minSdkVersion(Android.minSdk)
         targetSdkVersion(Android.targetSdk)
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -80,6 +85,7 @@ kotlin {
         api("org.kodein.di:kodein-di:${Versions.kodein}")
         api("org.reduxkotlin:redux-kotlin-threadsafe:0.5.1")
         api("org.reduxkotlin:redux-kotlin-thunk:0.4.0")
+
 //        api("org.reduxkotlin:presenter-middleware:0.2.10")
     }
 
@@ -91,6 +97,7 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization")
         implementation("com.squareup.sqldelight:android-driver:$sqlDelight")
         implementation("org.reduxkotlin:redux-kotlin-threadsafe-jvm:0.5.1")
+        implementation("androidx.appcompat:appcompat:1.1.0")
     }
 
     sourceSets["iosMain"].dependencies {
