@@ -1,5 +1,6 @@
 package com.plusmobileapps.sharedcode.redux
 
+import com.plusmobileapps.sharedcode.ApplicationDispatcher
 import com.plusmobileapps.sharedcode.redux.presentermiddleware.presenterEnhancer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -18,7 +19,7 @@ class ReduxEngine(
         compose(
             listOf(
                 presenterEnhancer(uiContext),
-                applyMiddleware(createThunkMiddleware())
+                applyMiddleware(createThunkMiddleware(), uiMiddleware(HomeFeedThunk(ApplicationDispatcher)))
             )
         )
     )

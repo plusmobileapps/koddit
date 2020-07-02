@@ -9,13 +9,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.plusmobileapps.sharedcode.FeedRepository
 import com.plusmobileapps.sharedcode.RedditPostResponse
-import com.plusmobileapps.sharedcode.di.commonModule
 import com.plusmobileapps.sharedcode.redux.FeedStarted
 import com.plusmobileapps.sharedcode.redux.HomeFeedView
-import org.kodein.di.direct
-import org.kodein.di.instance
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -28,8 +24,6 @@ class HomeFeedFragment : BaseFragment<HomeFeedView>(), HomeFeedView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val foo = commonModule.direct.instance<FeedRepository>().getDankMemes()
-        foo(dispatch, KodditApplication.reduxEngine.store.getState, null)
     }
 
     override fun onCreateView(

@@ -2,17 +2,19 @@ package com.plusmobileapps.sharedcode
 
 import com.plusmobileapps.sharedcode.db.MyDatabase
 import com.plusmobileapps.sharedcode.db.data.Post
-import com.plusmobileapps.sharedcode.redux.Actions
-import com.plusmobileapps.sharedcode.redux.AppState
 import io.ktor.client.HttpClient
-import io.ktor.client.request.get
-import kotlinx.coroutines.*
-import org.reduxkotlin.Thunk
-import org.reduxkotlin.createThunkMiddleware
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 
 expect val client: HttpClient
 
 expect fun createDb(): MyDatabase
+
+sealed class FeedResult {
+    data class Success(val posts: List<RedditPostResponse>) : FeedResult()
+    data class Error(val error: String) : FeedResult()
+}
 
 class FeedRepository(
     private val db: MyDatabase,
@@ -23,42 +25,36 @@ class FeedRepository(
     private val job = Job()
     private val scope = CoroutineScope(job + dispatcher)
 
-
-    fun getDankMemes(): Thunk<AppState> = { dispatch, getState, extraArg ->
-        dispatch(Actions.LoadingFeed)
-
-        scope.launch {
-            val cache = db.postQueries.selectAll().executeAsList()
-            if (cache.isNotEmpty()) {
-                dispatch(Actions.FeedLoaded(cache.map { it.toRedditPost() }))
-                return@launch
+    suspend fun getDankMemes(): FeedResult {
+        val cache = db.postQueries.selectAll().executeAsList()
+        if (cache.isNotEmpty()) {
+            return FeedResult.Success(cache.map { it.toRedditPost() })
+        }
+        try {
+            val response = api.getDankMemes()
+            response.data.children.forEach { redditPost ->
+                val post = redditPost.toPost()
+                db.postQueries.insertItem(
+                    id = post.id,
+                    post_hint = post.post_hint,
+                    url = post.url,
+                    thumbnail = post.thumbnail,
+                    subreddit_name_prefixed = post.subreddit_name_prefixed,
+                    permalink = post.permalink,
+                    num_comments = post.num_comments,
+                    kind = post.kind,
+                    is_video = post.is_video,
+                    ups = post.ups,
+                    downs = post.downs,
+                    author_fullname = post.author_fullname,
+                    author = post.author,
+                    subreddit = post.subreddit,
+                    title = post.title
+                )
             }
-            try {
-                val response = api.getDankMemes()
-                response.data.children.forEach { redditPost ->
-                    val post = redditPost.toPost()
-                    db.postQueries.insertItem(
-                        id = post.id,
-                        post_hint = post.post_hint,
-                        url = post.url,
-                        thumbnail = post.thumbnail,
-                        subreddit_name_prefixed = post.subreddit_name_prefixed,
-                        permalink = post.permalink,
-                        num_comments = post.num_comments,
-                        kind = post.kind,
-                        is_video = post.is_video,
-                        ups = post.ups,
-                        downs = post.downs,
-                        author_fullname = post.author_fullname,
-                        author = post.author,
-                        subreddit = post.subreddit,
-                        title = post.title
-                    )
-                }
-                dispatch(Actions.FeedLoaded(posts = response.data.children.map { it.data }))
-            } catch (e: Exception) {
-                dispatch(Actions.FeedError(e.toString()))
-            }
+            return FeedResult.Success(response.data.children.map { it.data })
+        } catch (e: Exception) {
+            return FeedResult.Error(e.toString())
         }
     }
 

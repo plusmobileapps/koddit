@@ -2,6 +2,9 @@ package com.plusmobileapps.sharedcode.di
 
 import com.plusmobileapps.sharedcode.*
 import com.plusmobileapps.sharedcode.ApplicationDispatcher
+import com.plusmobileapps.sharedcode.FeedRepository
+import com.plusmobileapps.sharedcode.client
+import com.plusmobileapps.sharedcode.createDb
 import com.plusmobileapps.sharedcode.db.MyDatabase
 import io.ktor.client.HttpClient
 import kotlinx.coroutines.CoroutineDispatcher
@@ -12,7 +15,13 @@ val commonModule = DI.lazy {
     bind<CoroutineDispatcher>() with singleton { ApplicationDispatcher }
     bind<MyDatabase>() with singleton { createDb() }
     bind<RedditFeedApi>() with singleton { RedditFeedApi(instance()) }
-    bind<FeedRepository>() with singleton { FeedRepository(instance(), instance(), instance()) }
+    bind<FeedRepository>() with singleton {
+        FeedRepository(
+            instance(),
+            instance(),
+            instance()
+        )
+    }
 }
 
 object Di {
