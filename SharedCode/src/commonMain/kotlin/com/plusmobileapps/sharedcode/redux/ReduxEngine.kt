@@ -19,7 +19,11 @@ class ReduxEngine(
         compose(
             listOf(
                 presenterEnhancer(uiContext),
-                applyMiddleware(createThunkMiddleware(), uiMiddleware(HomeFeedThunk(ApplicationDispatcher)))
+                applyMiddleware(
+                    createThunkMiddleware(),
+                    uiMiddleware(HomeFeedThunk(ApplicationDispatcher)),
+                    loggingMiddleware
+                )
             )
         )
     )

@@ -23,5 +23,7 @@ allprojects {
         jcenter()
         mavenCentral()
         maven("https://kotlin.bintray.com/kotlin-js-wrappers/")
+        maven("https://dl.bintray.com/aakira/maven")
+
     }
 }

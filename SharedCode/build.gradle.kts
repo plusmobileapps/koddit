@@ -79,6 +79,7 @@ kotlin {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
         implementation(Ktor.core)
         implementation(Ktor.serialization)
+        implementation("com.github.aakira:napier:${Versions.napierVersion}")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization")
         implementation("com.squareup.sqldelight:runtime:$sqlDelight")
@@ -98,6 +99,7 @@ kotlin {
         implementation("com.squareup.sqldelight:android-driver:$sqlDelight")
         implementation("org.reduxkotlin:redux-kotlin-threadsafe-jvm:0.5.1")
         implementation("androidx.appcompat:appcompat:1.1.0")
+        implementation("com.github.aakira:napier-android:${Versions.napierVersion}")
     }
 
     sourceSets["iosMain"].dependencies {
@@ -106,6 +108,8 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization")
         implementation("io.ktor:ktor-client-serialization-native:$ktor")
         implementation ("com.squareup.sqldelight:native-driver:$sqlDelight")
+        implementation("com.github.aakira:napier-ios:${Versions.napierVersion}")
+
 
     }
 
@@ -118,6 +122,7 @@ kotlin {
         implementation(npm("bufferutil"))
         implementation(npm("utf-8-validate"))
         implementation(npm("fs"))
+        implementation("com.github.aakira:napier-js:${Versions.napierVersion}")
 
         // ktor
         implementation("io.ktor:ktor-client-js:${Versions.ktor}") //include http&websockets

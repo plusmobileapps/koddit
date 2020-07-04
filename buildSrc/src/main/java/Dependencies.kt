@@ -6,6 +6,7 @@ object Versions {
     const val kodein = "7.0.0"
     const val ktor = "1.3.2"
     const val sqlDelight = "1.3.0"
+    const val napierVersion = "1.3.0"
 
 }
 
