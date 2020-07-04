@@ -8,5 +8,5 @@ sealed class UiActions {
     data class DownVoteAction(val postId: String) : UiActions()
     data class MoreOptionsAction(val postId: String) : UiActions()
     data class OpenCommentAction(val postId: String) : UiActions()
-    data class SharePostAction(val postId: String) : UiActions()
+    data class SharePostAction(val post: RedditPostResponse) : UiActions()
 }

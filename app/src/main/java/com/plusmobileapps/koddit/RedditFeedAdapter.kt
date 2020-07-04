@@ -85,16 +85,7 @@ class RedditFeedViewHolder(view: View) :
         upVote.setOnClickListener { dispatch(UiActions.UpVoteAction(data.id)) }
         commentButton.setOnClickListener { dispatch(UiActions.OpenCommentAction(data.id)) }
         shareButton.setOnClickListener {
-            dispatch(UiActions.SharePostAction(data.id))
-            //TODO
-            //        val sendIntent: Intent = Intent().apply {
-//            action = Intent.ACTION_SEND
-//            putExtra(Intent.EXTRA_TEXT, post.shareLink)
-//            type = "text/plain"
-//        }
-//
-//        val shareIntent = Intent.createChooser(sendIntent, null)
-//        requireContext().startActivity(shareIntent)
+            dispatch(UiActions.SharePostAction(data))
         }
         itemView.setOnClickListener { dispatch(UiActions.PostDetailAction(data)) }
     }

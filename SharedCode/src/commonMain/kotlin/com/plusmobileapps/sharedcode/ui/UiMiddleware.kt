@@ -13,8 +13,9 @@ fun uiMiddleware(homeFeedThunk: HomeFeedThunk) = middleware<AppState> { store, n
         is DownVoteAction -> store.dispatch(homeFeedThunk.downVote(action.postId))
         is FeedStarted -> store.dispatch(homeFeedThunk.fetchDankMemes())
         is UiActions.PostDetailAction -> {
-            store.dispatch(Actions.PostDetailOpened(action.post))
+//            store.dispatch(Actions.PostDetailOpened(action.post))
             store.dispatch(NavigationActions.NavigateTo(Screen.POST_DETAIL))
+            next(action)
         }
         else -> next(action)
     }

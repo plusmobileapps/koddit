@@ -9,6 +9,7 @@ interface HomeFeedView: ViewWithProvider<AppState> {
     fun showError(error: String)
     fun hideError()
     fun showPosts(posts: List<RedditPostResponse>)
+    fun showShareSheet(url: String)
 
     override fun presenter() = startPresenter
 }
@@ -28,6 +29,12 @@ val startPresenter = presenter<HomeFeedView> {
         }
         select { state.posts } then  {
             showPosts(state.posts)
+        }
+
+        select { state.shareUrl } then {
+            if (state.shareUrl.isNotEmpty()) {
+                showShareSheet(state.shareUrl)
+            }
         }
     }
 }
