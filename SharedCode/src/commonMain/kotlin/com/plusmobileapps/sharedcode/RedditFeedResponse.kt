@@ -28,18 +28,18 @@ data class RedditPost(
 
 @Serializable
 data class RedditPostResponse(
-    val subreddit: String,
-    val author_fullname: String,
-    val title: String,
-    val subreddit_name_prefixed: String,
-    val downs: Int,
-    val ups: Int,
-    val id: String,
-    val thumbnail: String,
+    val subreddit: String = "",
+    val author_fullname: String = "",
+    val title: String = "",
+    val subreddit_name_prefixed: String = "",
+    val downs: Int = 0,
+    val ups: Int = 0,
+    val id: String = "",
+    val thumbnail: String = "",
     val post_hint: String = "",
-    val url: String,
-    val num_comments: Int,
-    val author: String,
-    val permalink: String,
-    val is_video: Boolean
+    val url: String = "",
+    val num_comments: Int = 0,
+    val author: String = "",
+    val permalink: String = "",
+    val is_video: Boolean = false
 )

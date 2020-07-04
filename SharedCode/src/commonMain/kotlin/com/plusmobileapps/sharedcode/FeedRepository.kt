@@ -6,6 +6,7 @@ import io.ktor.client.HttpClient
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.withContext
 
 expect val client: HttpClient
 
@@ -56,6 +57,11 @@ class FeedRepository(
         } catch (e: Exception) {
             return FeedResult.Error(e.toString())
         }
+    }
+
+    suspend fun upVote(postId: String): Boolean {
+        //TODO
+        return true
     }
 
     private fun RedditPost.toPost(): Post {

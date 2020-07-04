@@ -2,6 +2,7 @@ package com.plusmobileapps.sharedcode.redux
 
 import com.plusmobileapps.sharedcode.ApplicationDispatcher
 import com.plusmobileapps.sharedcode.redux.presentermiddleware.presenterEnhancer
+import com.plusmobileapps.sharedcode.ui.uiMiddleware
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.reduxkotlin.applyMiddleware
@@ -11,7 +12,9 @@ import org.reduxkotlin.createThunkMiddleware
 import kotlin.coroutines.CoroutineContext
 
 class ReduxEngine(
-    private val uiContext: CoroutineContext
+    navigator: Navigator,
+    private val uiContext: CoroutineContext,
+    private val backgroundContext: CoroutineContext
 ) {
     val store = createThreadSafeStore(
         ::rootReducer,
@@ -22,6 +25,7 @@ class ReduxEngine(
                 applyMiddleware(
                     createThunkMiddleware(),
                     uiMiddleware(HomeFeedThunk(ApplicationDispatcher)),
+                    navigationMiddleware(navigator),
                     loggingMiddleware
                 )
             )

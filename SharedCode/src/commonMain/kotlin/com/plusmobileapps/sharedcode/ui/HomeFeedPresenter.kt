@@ -1,11 +1,8 @@
-package com.plusmobileapps.sharedcode.redux
+package com.plusmobileapps.sharedcode.ui
 
 import com.plusmobileapps.sharedcode.RedditPostResponse
-import com.plusmobileapps.sharedcode.redux.presentermiddleware.Presenter
-import com.plusmobileapps.sharedcode.redux.presentermiddleware.View
+import com.plusmobileapps.sharedcode.redux.AppState
 import com.plusmobileapps.sharedcode.redux.presentermiddleware.ViewWithProvider
-import com.plusmobileapps.sharedcode.redux.presentermiddleware.createGenericPresenter
-import com.plusmobileapps.sharedcode.ui.presenter
 
 interface HomeFeedView: ViewWithProvider<AppState> {
     fun showLoading(show: Boolean)

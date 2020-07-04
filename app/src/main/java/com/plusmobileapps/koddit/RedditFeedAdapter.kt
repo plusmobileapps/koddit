@@ -15,6 +15,8 @@ import com.plusmobileapps.sharedcode.RedditPostResponse
 import com.plusmobileapps.sharedcode.formattedAuthor
 import com.plusmobileapps.sharedcode.formattedKarma
 import com.plusmobileapps.sharedcode.redux.*
+import com.plusmobileapps.sharedcode.ui.UiActions
+import com.plusmobileapps.sharedcode.ui.UiActions.MoreOptionsAction
 
 data class RedditFeedItem(
     val id: String,
@@ -79,11 +81,11 @@ class RedditFeedViewHolder(view: View) :
         moreOptions.setOnClickListener {
             dispatch(MoreOptionsAction(data.id))
         }
-        downVote.setOnClickListener { dispatch(DownVoteAction(data.id)) }
-        upVote.setOnClickListener { dispatch(UpVoteAction(data.id)) }
-        commentButton.setOnClickListener { dispatch(OpenCommentAction(data.id)) }
+        downVote.setOnClickListener { dispatch(UiActions.DownVoteAction(data.id)) }
+        upVote.setOnClickListener { dispatch(UiActions.UpVoteAction(data.id)) }
+        commentButton.setOnClickListener { dispatch(UiActions.OpenCommentAction(data.id)) }
         shareButton.setOnClickListener {
-            dispatch(SharePostAction(data.id))
+            dispatch(UiActions.SharePostAction(data.id))
             //TODO
             //        val sendIntent: Intent = Intent().apply {
 //            action = Intent.ACTION_SEND
@@ -94,7 +96,7 @@ class RedditFeedViewHolder(view: View) :
 //        val shareIntent = Intent.createChooser(sendIntent, null)
 //        requireContext().startActivity(shareIntent)
         }
-        itemView.setOnClickListener { dispatch(PostDetailAction(data.id)) }
+        itemView.setOnClickListener { dispatch(UiActions.PostDetailAction(data)) }
     }
 
 }

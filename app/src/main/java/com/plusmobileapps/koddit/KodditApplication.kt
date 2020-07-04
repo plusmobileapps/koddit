@@ -20,8 +20,10 @@ class KodditApplication : Application() {
         super.onCreate()
         startLogging()
         context = this
-        reduxEngine = ReduxEngine(Dispatchers.Main)
+        val navigator = AndroidNavigator()
+        reduxEngine = ReduxEngine(navigator, Dispatchers.Main, Dispatchers.IO)
         dispatch = reduxEngine.store.dispatch
+        registerActivityLifecycleCallbacks(navigator)
         dispatch(ApplicationStarted)
     }
 }

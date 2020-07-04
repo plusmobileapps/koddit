@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.plusmobileapps.sharedcode.RedditPostResponse
 import com.plusmobileapps.sharedcode.redux.FeedStarted
-import com.plusmobileapps.sharedcode.redux.HomeFeedView
+import com.plusmobileapps.sharedcode.ui.HomeFeedView
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class HomeFeedFragment : BaseFragment<HomeFeedView>(), HomeFeedView {
+class HomeFeedFragment : BaseFragment<HomeFeedView>(),
+    HomeFeedView {
 
     private val adapter = RedditFeedAdapter()
     private lateinit var progressBar: ProgressBar
