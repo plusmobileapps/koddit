@@ -78,6 +78,8 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization")
         implementation("com.squareup.sqldelight:runtime:$sqlDelight")
         api("org.kodein.di:kodein-di:${Versions.kodein}")
+        api("org.reduxkotlin:redux-kotlin-threadsafe:0.5.1")
+
     }
 
     sourceSets["androidMain"].dependencies {

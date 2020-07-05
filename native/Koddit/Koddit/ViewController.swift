@@ -10,7 +10,11 @@ import UIKit
 import SharedCode
 
 class ViewController: UIViewController {
+    var subscription: (() -> KotlinUnit)?
 
+    @IBAction func buttonClicked(_ sender: Any) {
+        AppStateKt.store().dispatch(IncrementCount())
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -19,8 +23,18 @@ class ViewController: UIViewController {
         label.textAlignment = .center
         label.font = label.font.withSize(25)
         label.text = CommonKt.createApplicationScreenMessage()
-        Di.init().getFeedRepository().getDankMemes(onSuccess: onDankMemesLoaded(response:), onError: onDankMemesError(error:))
+        subscription = AppStateKt.store().subscribe({ () -> KotlinUnit in
+            let state = AppStateKt.store().state as? AppState
+            label.text = state?.count.description
+            return KotlinUnit.init()
+        })
+//        Di.init().getFeedRepository().getDankMemes(onSuccess: onDankMemesLoaded(response:), onError: onDankMemesError(error:))
         view.addSubview(label)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        subscription?()
     }
 
     func onDankMemesLoaded(response: [Post]) {
