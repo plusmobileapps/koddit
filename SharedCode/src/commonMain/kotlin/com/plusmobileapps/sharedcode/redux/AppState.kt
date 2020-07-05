@@ -15,10 +15,12 @@ val reducer: Reducer<AppState> = { state, action ->
     }
 }
 
+
 val store: Store<AppState> = createThreadSafeStore(reducer, AppState())
 
 
 /**
- * for ios only 
+ * for ios only
  */
-fun store(): Store<AppState> = store
+fun getStore(): Store<AppState> = store
+//TODO fix in ios
