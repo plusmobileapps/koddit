@@ -63,7 +63,7 @@ kotlin {
         android()
     }
     js {
-        browser{
+        browser {
             dceTask {
                 keep("ktor-ktor-io.\$\$importsForInline\$\$.ktor-ktor-io.io.ktor.utils.io")
             }
@@ -78,8 +78,9 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization")
         implementation("com.squareup.sqldelight:runtime:$sqlDelight")
         api("org.kodein.di:kodein-di:${Versions.kodein}")
-        api("org.reduxkotlin:redux-kotlin-threadsafe:0.5.1")
-
+        api("org.reduxkotlin:redux-kotlin-threadsafe:0.5.3")
+//        api("org.reduxkotlin:redux-kotlin-thunk:0.4.0")
+        implementation("com.github.aakira:napier:${Versions.napierVersion}")
     }
 
     sourceSets["androidMain"].dependencies {
@@ -89,6 +90,8 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization")
         implementation("com.squareup.sqldelight:android-driver:$sqlDelight")
+        implementation("com.github.aakira:napier-android:${Versions.napierVersion}")
+
     }
 
     sourceSets["iosMain"].dependencies {
@@ -96,7 +99,9 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization")
         implementation("io.ktor:ktor-client-serialization-native:$ktor")
-        implementation ("com.squareup.sqldelight:native-driver:$sqlDelight")
+        implementation("com.squareup.sqldelight:native-driver:$sqlDelight")
+        implementation("com.github.aakira:napier-ios:${Versions.napierVersion}")
+
 
     }
 
@@ -109,6 +114,8 @@ kotlin {
         implementation(npm("bufferutil"))
         implementation(npm("utf-8-validate"))
         implementation(npm("fs"))
+        implementation("com.github.aakira:napier-js:${Versions.napierVersion}")
+
 
         // ktor
         implementation("io.ktor:ktor-client-js:${Versions.ktor}") //include http&websockets

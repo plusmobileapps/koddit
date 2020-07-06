@@ -1,8 +1,7 @@
 package com.plusmobileapps.sharedcode.redux
 
-import org.reduxkotlin.Reducer
-import org.reduxkotlin.Store
-import org.reduxkotlin.createThreadSafeStore
+import com.plusmobileapps.sharedcode.middleware.loggingMiddleware
+import org.reduxkotlin.*
 
 data class AppState(val count: Int = 0)
 
@@ -16,7 +15,7 @@ val reducer: Reducer<AppState> = { state, action ->
 }
 
 
-val reduxStore: Store<AppState> = createThreadSafeStore(reducer, AppState())
+val reduxStore: Store<AppState> = createThreadSafeStore(reducer, AppState(), applyMiddleware(loggingMiddleware))
 
 
 /**
