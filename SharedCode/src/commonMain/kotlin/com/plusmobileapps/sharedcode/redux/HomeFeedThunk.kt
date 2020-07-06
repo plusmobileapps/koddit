@@ -5,12 +5,12 @@ import com.plusmobileapps.sharedcode.FeedRepository
 import com.plusmobileapps.sharedcode.FeedResult
 import com.plusmobileapps.sharedcode.di.Di
 import com.plusmobileapps.sharedcode.di.commonModule
+import com.plusmobileapps.sharedcode.redux.presentermiddleware.Thunk
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.kodein.di.direct
 import org.kodein.di.instance
-import org.reduxkotlin.Thunk
 import kotlin.coroutines.CoroutineContext
 
 class HomeFeedThunk(
