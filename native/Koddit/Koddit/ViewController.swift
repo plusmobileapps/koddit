@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     var subscription: (() -> KotlinUnit)?
 
     @IBAction func buttonClicked(_ sender: Any) {
-        AppStateKt.store().dispatch(IncrementCount())
+        AppStateKt.getStore().dispatch(IncrementCount())
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,8 +23,8 @@ class ViewController: UIViewController {
         label.textAlignment = .center
         label.font = label.font.withSize(25)
         label.text = CommonKt.createApplicationScreenMessage()
-        subscription = AppStateKt.store().subscribe({ () -> KotlinUnit in
-            let state = AppStateKt.store().state as? AppState
+        subscription = AppStateKt.getStore().subscribe({ () -> KotlinUnit in
+            let state = AppStateKt.getStore().state as? AppState
             label.text = state?.count.description
             return KotlinUnit.init()
         })

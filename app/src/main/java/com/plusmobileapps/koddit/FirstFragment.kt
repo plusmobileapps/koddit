@@ -2,25 +2,15 @@ package com.plusmobileapps.koddit
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.plusmobileapps.sharedcode.FeedRepository
 import com.plusmobileapps.sharedcode.db.data.Post
-import com.plusmobileapps.sharedcode.di.commonModule
-import com.plusmobileapps.sharedcode.redux.store
+import com.plusmobileapps.sharedcode.redux.reduxStore
 import com.plusmobileapps.sharedcode.shareLink
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.kodein.di.direct
-import org.kodein.di.instance
 import org.reduxkotlin.StoreSubscription
 
 /**
@@ -41,8 +31,8 @@ class FirstFragment : Fragment(), RedditFeedItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         counterText = view.findViewById(R.id.counter)
-        storeSubscription = store.subscribe {
-            counterText.text = store.state.count.toString()
+        storeSubscription = reduxStore.subscribe {
+            counterText.text = reduxStore.state.count.toString()
         }
 //        val recyclerView = view.findViewById<RecyclerView>(R.id.reddit_home_feed)
 //        val adapter = RedditFeedAdapter(this)

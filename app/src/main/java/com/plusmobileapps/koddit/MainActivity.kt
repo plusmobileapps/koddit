@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.plusmobileapps.sharedcode.redux.IncrementCount
-import com.plusmobileapps.sharedcode.redux.store
+import com.plusmobileapps.sharedcode.redux.reduxStore
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            store.dispatch(IncrementCount())
+            reduxStore.dispatch(IncrementCount())
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
