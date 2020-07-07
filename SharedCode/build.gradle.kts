@@ -67,6 +67,13 @@ kotlin {
             dceTask {
                 keep("ktor-ktor-io.\$\$importsForInline\$\$.ktor-ktor-io.io.ktor.utils.io")
             }
+
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    useFirefox()
+                }
+            }
         }
     }
 
@@ -80,6 +87,12 @@ kotlin {
         api("org.kodein.di:kodein-di:${Versions.kodein}")
     }
 
+    sourceSets["commonTest"].dependencies {
+        implementation("org.jetbrains.kotlin:kotlin-test-common:${Versions.kotlin}")
+        implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:${Versions.kotlin}")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}")
+    }
+
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
         implementation(Ktor.androidClient)
@@ -87,6 +100,11 @@ kotlin {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization")
         implementation("com.squareup.sqldelight:android-driver:$sqlDelight")
+    }
+
+    sourceSets["androidTest"].dependencies {
+        implementation(kotlin("test"))
+        implementation(kotlin("test-junit"))
     }
 
     sourceSets["iosMain"].dependencies {
@@ -116,6 +134,10 @@ kotlin {
 
         // Serialize
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.serialization}")
+    }
+
+    sourceSets["jsTest"].dependencies {
+        implementation(kotlin("test-js"))
     }
 }
 
